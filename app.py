@@ -1,4 +1,3 @@
-```python
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -6,16 +5,22 @@ import joblib
 from prophet.plot import plot_plotly
 import plotly.express as px
 
+# =========================
 # PAGE CONFIG
+# =========================
 st.set_page_config(
     page_title="Smart ML Analytics Dashboard",
     layout="wide"
 )
 
+# =========================
 # TITLE
+# =========================
 st.title("Smart ML Analytics Dashboard")
 
+# =========================
 # SIDEBAR MENU
+# =========================
 menu = st.sidebar.selectbox(
     "Select Module",
     [
@@ -26,23 +31,23 @@ menu = st.sidebar.selectbox(
     ]
 )
 
-# =========================
+# =========================================================
 # HOME
-# =========================
+# =========================================================
 if menu == "Home":
 
     st.header("Machine Learning Dashboard")
 
     st.write("""
-    ### Modules Included:
+    ### Modules Included
     - Supervised Learning
     - Unsupervised Learning
     - Time Series Forecasting
     """)
 
-# =========================
+# =========================================================
 # SHIPMENT PREDICTION
-# =========================
+# =========================================================
 elif menu == "Shipment Prediction":
 
     st.header("Shipment Delivery Prediction")
@@ -50,7 +55,7 @@ elif menu == "Shipment Prediction":
     # LOAD MODEL
     model = joblib.load("shipment_model.pkl")
 
-    # INPUTS
+    # USER INPUTS
     warehouse = st.selectbox(
         "Warehouse Block",
         [0, 1, 2, 3, 4]
@@ -113,7 +118,7 @@ elif menu == "Shipment Prediction":
         value=2000
     )
 
-    # INPUT ARRAY
+    # CREATE INPUT ARRAY
     input_data = np.array([[
         warehouse,
         shipment,
@@ -127,7 +132,7 @@ elif menu == "Shipment Prediction":
         weight
     ]])
 
-    # PREDICTION
+    # PREDICTION BUTTON
     if st.button("Predict"):
 
         prediction = model.predict(input_data)
@@ -139,7 +144,7 @@ elif menu == "Shipment Prediction":
             )
 
             st.write("""
-            ### Possible Reasons:
+            ### Possible Reasons
             - High shipment weight
             - Delivery mode
             - Product handling conditions
@@ -152,14 +157,14 @@ elif menu == "Shipment Prediction":
                 "Prediction Result: Shipment is expected to arrive on time."
             )
 
-# =========================
+# =========================================================
 # CUSTOMER SEGMENTATION
-# =========================
+# =========================================================
 elif menu == "Customer Segmentation":
 
     st.header("Customer Segmentation")
 
-    # LOAD DATA
+    # LOAD DATASET
     mall_df = pd.read_csv("Mall_Customers.csv")
 
     # FEATURES
@@ -173,7 +178,7 @@ elif menu == "Customer Segmentation":
     # PREDICT CLUSTERS
     mall_df['Cluster'] = kmeans.predict(X)
 
-    # PLOT
+    # SCATTER PLOT
     fig = px.scatter(
         mall_df,
         x='Annual Income (k$)',
@@ -184,11 +189,12 @@ elif menu == "Customer Segmentation":
 
     st.plotly_chart(fig)
 
+    # DISPLAY DATA
     st.write(mall_df)
 
-# =========================
+# =========================================================
 # DEMAND FORECASTING
-# =========================
+# =========================================================
 elif menu == "Demand Forecasting":
 
     st.header("Demand Forecasting")
@@ -196,7 +202,7 @@ elif menu == "Demand Forecasting":
     # LOAD MODEL
     model = joblib.load("demand_model.pkl")
 
-    # INPUT
+    # SELECT DAYS
     days = st.slider(
         "Forecast Days",
         7,
@@ -204,15 +210,15 @@ elif menu == "Demand Forecasting":
         90
     )
 
-    # FUTURE DATAFRAME
+    # CREATE FUTURE DATAFRAME
     future = model.make_future_dataframe(
         periods=days
     )
 
-    # FORECAST
+    # PREDICT FORECAST
     forecast = model.predict(future)
 
-    # PLOT
+    # PLOT FORECAST
     fig = plot_plotly(
         model,
         forecast
@@ -220,8 +226,7 @@ elif menu == "Demand Forecasting":
 
     st.plotly_chart(fig)
 
-    # SHOW RESULTS
+    # DISPLAY FORECAST TABLE
     st.write(
         forecast[['ds', 'yhat']].tail(days)
     )
-```
