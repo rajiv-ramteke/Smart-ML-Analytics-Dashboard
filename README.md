@@ -1,2 +1,19 @@
-# Smart-ML-Analytics-Dashboard
-Smart ML Analytics Dashboard integrates Supervised Learning, Unsupervised Learning, and Time Series Forecasting using Random Forest, K-Means Clustering, and Prophet algorithms. Built with Python, Streamlit, Scikit-learn, Pandas, NumPy, and Plotly for prediction and analytics.
+
+# Smart ML Analytics Dashboard
+
+This project contains:
+
+1. Supervised Learning
+2. Unsupervised Learning
+3. Time Series Forecasting
+
+Algorithms:
+- Random Forest
+- K-Means Clustering
+- Prophet
+
+Built using:
+- Python
+- Streamlit
+- Scikit-learn
+- Plotly
