@@ -121,9 +121,24 @@ elif menu == "Shipment Prediction":
         prediction = model.predict(input_data)
 
         if prediction[0] == 1:
-            st.error("Shipment Delayed")
-        else:
-            st.success("Shipment On Time")
+
+    st.error(
+        "Prediction Result: Shipment may be delayed based on shipment details."
+    )
+
+    st.write("""
+    Possible reasons:
+    - High shipment weight
+    - Delivery mode
+    - Product handling conditions
+    - Customer history
+    """)
+
+else:
+
+    st.success(
+        "Prediction Result: Shipment is expected to arrive on time."
+    )
 
 # CUSTOMER SEGMENTATION
 elif menu == "Customer Segmentation":
